@@ -1,0 +1,527 @@
+/* Flag-detail evidence cards + travel map (plan 15.2.4 / 15.2.6). Tokens only. */
+
+.ev-card {
+  --ev-level: var(--level-high);
+  --ev-level-soft: var(--level-high-soft);
+  --ev-level-on-soft: var(--level-high-on-soft);
+}
+
+.ev-mono {
+  font-family: var(--font-mono);
+  white-space: nowrap;
+}
+
+/* ---------- Travel map ---------- */
+.ev-map {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+}
+
+.ev-map .leaflet-container {
+  width: 100%;
+  height: 100%;
+  background: var(--surface-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+}
+
+.ev-map .leaflet-container:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px var(--focus-ring);
+}
+
+.ev-map .leaflet-control-attribution {
+  background: color-mix(in srgb, var(--surface) 85%, transparent);
+  color: var(--text-3);
+  font-size: 10px;
+  border-top-left-radius: var(--radius-xs);
+}
+
+.ev-map .leaflet-control-attribution a {
+  color: var(--text-2);
+}
+
+.ev-map .leaflet-bar {
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.ev-map .leaflet-bar a {
+  background: var(--surface);
+  color: var(--text-2);
+  border-bottom-color: var(--border);
+}
+
+.ev-map .leaflet-bar a:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.ev-map .leaflet-bar a:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
+}
+
+.ev-map .leaflet-tooltip.ev-map-label {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  padding: 2px var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.ev-map .leaflet-tooltip.ev-map-label--current {
+  background: var(--ev-level-soft);
+  color: var(--ev-level-on-soft);
+  border-color: color-mix(in srgb, var(--ev-level) 40%, transparent);
+}
+
+.ev-map .leaflet-tooltip-top.ev-map-label::before {
+  border-top-color: var(--border);
+}
+
+.ev-map-chip {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  z-index: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  padding: var(--space-1) var(--space-3);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-md);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.ev-map-chip svg {
+  color: var(--ev-level);
+  flex-shrink: 0;
+}
+
+/* Placeholder when tiles fail / offline / no coordinates */
+.ev-map--placeholder {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  background:
+    radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--text-3) 22%, transparent) 1px, transparent 0) 0 0 / 16px 16px,
+    var(--surface-2);
+}
+
+.ev-map--placeholder .ev-map-chip--static {
+  position: static;
+  align-self: flex-start;
+  pointer-events: auto;
+}
+
+.ev-map-ph__route {
+  display: flex;
+  justify-content: center;
+}
+
+.ev-map-ph__svg {
+  width: min(100%, 320px);
+  height: auto;
+  overflow: visible;
+}
+
+.ev-map-ph__line {
+  stroke: var(--ev-level);
+  stroke-width: 2;
+  stroke-dasharray: 6 8;
+  stroke-linecap: round;
+}
+
+.ev-map-ph__prev {
+  fill: var(--map-previous);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.ev-map-ph__halo {
+  fill: var(--ev-level);
+  opacity: 0.18;
+}
+
+.ev-map-ph__cur {
+  fill: var(--ev-level);
+  stroke: var(--surface);
+  stroke-width: 2;
+}
+
+.ev-map-ph__places {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.ev-map-ph__place {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.ev-map-ph__dot {
+  width: 10px;
+  height: 10px;
+  margin-top: 4px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.ev-map-ph__dot--prev {
+  background: var(--map-previous);
+}
+
+.ev-map-ph__dot--cur {
+  background: var(--ev-level);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--ev-level) 20%, transparent);
+}
+
+.ev-map-ph__city {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+
+.ev-map-ph__coord {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ev-map-ph__note {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+}
+
+/* ---------- Stats row ---------- */
+.ev-stats {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-4) 0 0;
+}
+
+.ev-stats--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.ev-stats--compact {
+  margin-top: var(--space-3);
+}
+
+.ev-stat {
+  min-width: 0;
+  padding: var(--space-3);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.ev-stats--compact .ev-stat {
+  padding: var(--space-2) var(--space-3);
+}
+
+.ev-stat dd {
+  margin: 0;
+}
+
+.ev-stat__label {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--tracking-caps);
+  text-transform: uppercase;
+  color: var(--text-3);
+}
+
+.ev-stat__value {
+  margin-top: var(--space-1);
+  font-size: var(--fs-lg);
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.ev-stats--compact .ev-stat__value {
+  font-size: var(--fs-md);
+}
+
+.ev-stat__value--level {
+  color: var(--ev-level);
+}
+
+.ev-stat__sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1-5);
+  margin-top: var(--space-0-5);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.ev-ratio {
+  display: inline-flex;
+  align-items: center;
+  padding: 0 var(--space-1-5);
+  border-radius: var(--radius-full);
+  background: var(--ev-level-soft);
+  color: var(--ev-level-on-soft);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Amount chart ---------- */
+.ev-chart {
+  width: 100%;
+  margin: 0;
+}
+
+.ev-caption {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  font-size: var(--fs-sm);
+  color: var(--text-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.ev-caption__swatch {
+  width: 10px;
+  height: 10px;
+  margin-top: 5px;
+  border-radius: var(--radius-xs);
+  background: var(--ev-level);
+  flex-shrink: 0;
+}
+
+/* ---------- Balance bar ---------- */
+.ev-balance__figures {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.ev-balance__main {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ev-balance__track {
+  position: relative;
+  height: 14px;
+  border-radius: var(--radius-full);
+  background: var(--surface-3);
+  border: 1px solid var(--border);
+}
+
+.ev-balance__fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  background: var(--ev-level);
+  transition: width var(--dur-chart) var(--ease-out);
+}
+
+.ev-balance__marker {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--text);
+  border-radius: 1px;
+}
+
+.ev-balance__marker-label {
+  position: absolute;
+  bottom: calc(100% + 2px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0 var(--space-1);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--text-2);
+  background: var(--surface);
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.ev-balance__scale {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-1-5);
+  font-size: var(--fs-xs);
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Fraud ring ---------- */
+.ev-graph {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  overflow: hidden;
+}
+
+.ev-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-4);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  color: var(--text-3);
+  font-size: var(--fs-sm);
+  text-align: center;
+}
+
+.ev-inline-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  background: var(--warning-soft);
+  color: var(--warning-on-soft);
+  font-size: var(--fs-sm);
+}
+
+.ev-inline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-0-5) var(--space-2);
+  border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ev-inline-btn:hover {
+  background: color-mix(in srgb, var(--warning) 12%, transparent);
+}
+
+.ev-inline-btn:focus-visible,
+.ev-link:focus-visible,
+.ev-id-link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.ev-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: 500;
+  color: var(--brand);
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: var(--radius-xs);
+}
+
+.ev-link:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+
+.ev-ring-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.ev-ring-ids {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1-5);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ev-id-link {
+  display: inline-block;
+  padding: 1px var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.ev-id-link:hover {
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+.ev-id-link.is-current {
+  background: var(--ev-level-soft);
+  color: var(--ev-level-on-soft);
+  border-color: color-mix(in srgb, var(--ev-level) 40%, transparent);
+  font-weight: 600;
+}
+
+@media (max-width: 720px) {
+  .ev-stats--3 {
+    grid-template-columns: 1fr;
+  }
+  .ev-map-ph__places {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ev-balance__fill {
+    transition: none;
+  }
+}
