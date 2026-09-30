@@ -1,0 +1,280 @@
+/*
+ * RiskLens design tokens (plan Section 15.2.1).
+ * This file and src/constants/ are the ONLY places where color literals are allowed.
+ * Light theme = :root, dark theme = :root[data-theme="dark"] (set by ThemeContext).
+ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------- Brand ---------- */
+  --brand: #4F46E5;
+  --brand-hover: #4338CA;
+  --brand-soft: #EEF2FF;
+  --brand-soft-strong: #E0E7FF;
+  --on-brand: #FFFFFF;
+
+  /* ---------- Neutrals ---------- */
+  --bg: #F6F7F9;
+  --surface: #FFFFFF;
+  --surface-2: #F2F4F7;
+  --surface-3: #E4E7EC;
+  --border: #E4E7EC;
+  --border-strong: #D0D5DD;
+  --text: #101828;
+  --text-2: #475467;
+  --text-3: #98A2B3;
+  --on-solid: #FFFFFF;
+  --focus-ring: 0 0 0 3px rgba(79, 70, 229, 0.28);
+
+  /* ---------- Risk levels: solid / soft / on-soft (+ row tint) ---------- */
+  --level-low: #667085;
+  --level-low-soft: #F2F4F7;
+  --level-low-on-soft: #344054;
+  --level-medium: #F59E0B;
+  --level-medium-soft: #FEF3C7;
+  --level-medium-on-soft: #92400E;
+  --level-high: #F97316;
+  --level-high-soft: #FFEDD5;
+  --level-high-on-soft: #9A3412;
+  --level-critical: #E11D48;
+  --level-critical-soft: #FFE4E6;
+  --level-critical-on-soft: #9F1239;
+  --level-critical-tint: #FFF5F6;
+
+  /* ---------- Review statuses ---------- */
+  --status-pending-review: #2563EB;
+  --status-pending-review-soft: #DBEAFE;
+  --status-pending-review-on-soft: #1E40AF;
+  --status-reviewed: #7C3AED;
+  --status-reviewed-soft: #EDE9FE;
+  --status-reviewed-on-soft: #5B21B6;
+  --status-cleared: #059669;
+  --status-cleared-soft: #D1FAE5;
+  --status-cleared-on-soft: #065F46;
+  --status-confirmed-fraud: #991B1B;
+  --status-confirmed-fraud-soft: #991B1B; /* solid-filled badge */
+  --status-confirmed-fraud-on-soft: #FFFFFF;
+
+  /* ---------- Feedback ---------- */
+  --success: #12B76A;
+  --success-soft: #ECFDF3;
+  --success-on-soft: #027A48;
+  --warning: #F79009;
+  --warning-soft: #FFFAEB;
+  --warning-on-soft: #B54708;
+  --error: #F04438;
+  --error-soft: #FEF3F2;
+  --error-on-soft: #B42318;
+  --info: #2E90FA;
+  --info-soft: #EFF8FF;
+  --info-on-soft: #175CD3;
+  /* Button fills that keep white text at AA contrast */
+  --danger-fill: #D92D20;
+  --danger-fill-hover: #B42318;
+  --success-fill: #039855;
+  --success-fill-hover: #027A48;
+
+  /* ---------- Rules (mirrors src/constants/ruleMeta.js) ---------- */
+  --rule-velocity: #0EA5E9;
+  --rule-unusual-amount: #8B5CF6;
+  --rule-impossible-travel: #EC4899;
+  --rule-balance-drain: #14B8A6;
+  --rule-high-risk-merchant: #84CC16;
+  --rule-shared-device: #A16207;
+  --rule-fallback-1: #64748B;
+  --rule-fallback-2: #0891B2;
+  --rule-fallback-3: #C026D3;
+  --rule-fallback-4: #65A30D;
+
+  /* ---------- Overlays, tooltips, misc ---------- */
+  --tooltip-bg: #101828;
+  --tooltip-text: #FFFFFF;
+  --tooltip-border: #101828;
+  --backdrop: rgba(16, 24, 40, 0.45);
+  --login-gradient: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+  --login-hero-text: #FFFFFF;
+  --login-hero-text-2: rgba(255, 255, 255, 0.78);
+  --login-hero-chip: rgba(255, 255, 255, 0.14);
+  --logo-glyph: #FFFFFF;
+  --skeleton-base: #EEF0F3;
+  --skeleton-shine: rgba(255, 255, 255, 0.75);
+  --row-hover: #F9FAFB;
+  --row-selected: #EEF2FF;
+  --scrollbar-thumb: #D0D5DD;
+  --scrollbar-thumb-hover: #98A2B3;
+  --graph-edge: #98A2B3;
+  --map-previous: #667085;
+
+  /* JSON / code syntax (audit log) */
+  --code-bg: #F2F4F7;
+  --syntax-key: #4338CA;
+  --syntax-string: #067647;
+  --syntax-number: #B54708;
+  --syntax-boolean: #C11574;
+  --syntax-null: #98A2B3;
+  --syntax-punct: #667085;
+
+  /* ---------- Typography ---------- */
+  --font-sans: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --fs-xs: 12px;   --lh-xs: 16px;   --fw-xs: 500;
+  --fs-sm: 13px;   --lh-sm: 20px;   --fw-sm: 400;
+  --fs-base: 14px; --lh-base: 22px; --fw-base: 400;
+  --fs-md: 16px;   --lh-md: 24px;   --fw-md: 600;
+  --fs-lg: 20px;   --lh-lg: 28px;   --fw-lg: 600;
+  --fs-xl: 24px;   --lh-xl: 32px;   --fw-xl: 600;
+  --fs-2xl: 30px;  --lh-2xl: 38px;  --fw-2xl: 600;
+
+  /* font shorthands: use as `font: var(--text-sm);` */
+  --text-xs: 500 12px/16px var(--font-sans);
+  --text-sm: 400 13px/20px var(--font-sans);
+  --text-base: 400 14px/22px var(--font-sans);
+  --text-md: 600 16px/24px var(--font-sans);
+  --text-lg: 600 20px/28px var(--font-sans);
+  --text-xl: 600 24px/32px var(--font-sans);
+  --text-2xl: 600 30px/38px var(--font-sans);
+  --tracking-caps: 0.04em;
+
+  /* ---------- Spacing (4 px grid) ---------- */
+  --space-0-5: 2px;
+  --space-1: 4px;
+  --space-1-5: 6px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+
+  /* ---------- Radius ---------- */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-full: 999px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-sm: 0 1px 2px rgba(16, 24, 40, 0.06);
+  --shadow-md: 0 4px 12px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 12px 32px rgba(16, 24, 40, 0.14);
+
+  /* ---------- Motion ---------- */
+  --ease-out: ease-out;
+  --dur-fast: 150ms;
+  --dur-base: 200ms;
+  --dur-chart: 400ms;
+
+  /* ---------- Layout ---------- */
+  --sidebar-w: 240px;
+  --sidebar-w-collapsed: 64px;
+  --topbar-h: 56px;
+  --content-max: 1440px;
+  --content-pad: 24px;
+  --row-h: 48px;
+  --row-h-compact: 40px;
+  --control-h: 36px;
+  --control-h-sm: 32px;
+  --control-h-lg: 44px;
+
+  /* ---------- Layers ---------- */
+  --z-sticky: 10;
+  --z-sidebar: 20;
+  --z-topbar: 30;
+  --z-dropdown: 40;
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-tooltip: 70;
+  --z-progress: 80;
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --brand: #818CF8;
+  --brand-hover: #A5B4FC;
+  --brand-soft: rgba(129, 140, 248, 0.14);
+  --brand-soft-strong: rgba(129, 140, 248, 0.24);
+  --on-brand: #0B0F17;
+
+  --bg: #0B0F17;
+  --surface: #111827;
+  --surface-2: #1A2233;
+  --surface-3: #243044;
+  --border: #243044;
+  --border-strong: #344256;
+  --text: #F2F4F7;
+  --text-2: #B4BCC8;
+  --text-3: #7A8699;
+  --on-solid: #FFFFFF;
+  --focus-ring: 0 0 0 3px rgba(129, 140, 248, 0.35);
+
+  --level-low-soft: rgba(152, 162, 179, 0.16);
+  --level-low-on-soft: #D0D5DD;
+  --level-medium-soft: rgba(245, 158, 11, 0.16);
+  --level-medium-on-soft: #FCD34D;
+  --level-high-soft: rgba(249, 115, 22, 0.16);
+  --level-high-on-soft: #FDBA74;
+  --level-critical-soft: rgba(225, 29, 72, 0.18);
+  --level-critical-on-soft: #FDA4AF;
+  --level-critical-tint: rgba(225, 29, 72, 0.07);
+
+  --status-pending-review-soft: rgba(37, 99, 235, 0.18);
+  --status-pending-review-on-soft: #93C5FD;
+  --status-reviewed-soft: rgba(124, 58, 237, 0.18);
+  --status-reviewed-on-soft: #C4B5FD;
+  --status-cleared-soft: rgba(5, 150, 105, 0.18);
+  --status-cleared-on-soft: #6EE7B7;
+  --status-confirmed-fraud-soft: #991B1B;
+  --status-confirmed-fraud-on-soft: #FFFFFF;
+
+  --success-soft: rgba(18, 183, 106, 0.16);
+  --success-on-soft: #6CE9A6;
+  --warning-soft: rgba(247, 144, 9, 0.16);
+  --warning-on-soft: #FEC84B;
+  --error-soft: rgba(240, 68, 56, 0.16);
+  --error-on-soft: #FDA29B;
+  --info-soft: rgba(46, 144, 250, 0.16);
+  --info-on-soft: #84CAFF;
+
+  --tooltip-bg: #101828;
+  --tooltip-text: #FFFFFF;
+  --tooltip-border: #344256;
+  --backdrop: rgba(0, 0, 0, 0.6);
+  --skeleton-base: #1A2233;
+  --skeleton-shine: rgba(255, 255, 255, 0.06);
+  --row-hover: #1A2233;
+  --row-selected: rgba(129, 140, 248, 0.14);
+  --scrollbar-thumb: #344256;
+  --scrollbar-thumb-hover: #7A8699;
+  --graph-edge: #7A8699;
+  --map-previous: #98A2B3;
+
+  --code-bg: #1A2233;
+  --syntax-key: #A5B4FC;
+  --syntax-string: #75E0A7;
+  --syntax-number: #FDB022;
+  --syntax-boolean: #F670C7;
+  --syntax-null: #7A8699;
+  --syntax-punct: #98A2B3;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --content-pad: 32px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur-base: 0ms;
+    --dur-chart: 0ms;
+  }
+}
