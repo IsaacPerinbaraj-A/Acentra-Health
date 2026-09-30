@@ -1,0 +1,129 @@
+/* Transactions page (plan 15.2.4) - CSS variables only */
+.tx-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.tx-total {
+  font-size: var(--text-sm);
+  color: var(--text-3);
+  white-space: nowrap;
+}
+
+.tx-table {
+  min-width: 0;
+}
+
+.tx-id {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+
+.tx-link,
+.tx-flag__link {
+  color: var(--brand);
+  text-decoration: none;
+  font-weight: 500;
+}
+.tx-link:hover,
+.tx-flag__link:hover {
+  color: var(--brand-hover);
+  text-decoration: underline;
+}
+
+.tx-amount {
+  font-weight: 500;
+  color: var(--text);
+}
+
+.tx-merchant {
+  display: inline-block;
+  max-width: 260px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: bottom;
+}
+.tx-merchant__name {
+  color: var(--text);
+}
+.tx-merchant__city {
+  color: var(--text-3);
+}
+
+.tx-device {
+  appearance: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: var(--radius-xs);
+}
+.tx-device:hover {
+  color: var(--brand);
+  text-decoration: underline;
+}
+.tx-device:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}
+
+.tx-time {
+  color: var(--text-2);
+}
+
+.tx-muted {
+  color: var(--text-3);
+}
+
+.tx-flag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  white-space: nowrap;
+}
+.tx-flag__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+}
+
+/* Removable customer/device filter pills */
+.tx-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+.tx-pill__label {
+  opacity: 0.8;
+}
+.tx-pill__remove {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  margin-left: var(--space-0-5);
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.tx-pill__remove:hover {
+  background: color-mix(in srgb, currentColor 16%, transparent);
+}
+.tx-pill__remove:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+}

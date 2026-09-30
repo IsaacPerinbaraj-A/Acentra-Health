@@ -1,0 +1,303 @@
+/* ---------- Network page ---------- */
+.net-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.net-control--min {
+  width: 150px;
+}
+
+.net-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3) var(--space-6);
+  min-height: 24px;
+}
+
+.net-summary {
+  font: var(--text-sm);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.net-summary strong {
+  font-weight: 600;
+}
+
+.net-muted {
+  color: var(--text-3);
+}
+
+.net-legend {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-4);
+  font: var(--text-xs);
+  color: var(--text-2);
+}
+
+.net-legend__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1-5);
+  white-space: nowrap;
+}
+
+.net-legend__customer {
+  fill: var(--level-high-soft);
+  stroke: var(--level-high);
+  stroke-width: 2;
+}
+
+.net-legend__device {
+  fill: var(--surface-2);
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+}
+
+.net-legend__device--shared {
+  stroke: var(--error);
+  stroke-width: 2;
+}
+
+.net-legend__edge {
+  stroke: var(--text-3);
+  stroke-linecap: round;
+}
+
+.net-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  transition: opacity 200ms ease;
+}
+
+.net-grid.is-refreshing {
+  opacity: 0.7;
+}
+
+@media (min-width: 1280px) {
+  .net-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.net-card {
+  min-width: 0;
+}
+
+.net-card__title {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.net-card__title-text {
+  min-width: 0;
+}
+
+.net-card__devices {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+}
+
+.net-device-id {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-0-5);
+  white-space: nowrap;
+}
+
+.net-device-id.is-shared .net-mono {
+  color: var(--error-on-soft);
+}
+
+.net-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.net-card__graph {
+  min-height: 360px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface-2) 45%, transparent);
+  overflow: hidden;
+}
+
+.net-card__table {
+  margin-top: var(--space-3);
+}
+
+.net-id-link {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  white-space: nowrap;
+  color: var(--brand);
+  text-decoration: none;
+}
+
+.net-id-link:hover {
+  text-decoration: underline;
+}
+
+.net-num {
+  font-variant-numeric: tabular-nums;
+}
+
+.net-inline-error {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+}
+
+/* ---------- NetworkGraph (SVG) ---------- */
+.ng {
+  width: 100%;
+  min-width: 0;
+}
+
+.ng__svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  user-select: none;
+}
+
+.ng-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: var(--text-sm);
+  color: var(--text-3);
+}
+
+.ng__edge {
+  stroke: var(--text-3);
+  opacity: 0.45;
+  transition: opacity 200ms ease, stroke 200ms ease;
+}
+
+.ng__edge.is-active {
+  stroke: var(--text-2);
+  opacity: 0.9;
+}
+
+.ng__edge.is-dimmed {
+  opacity: 0.11;
+}
+
+.ng__device,
+.ng__customer {
+  transition: opacity 200ms ease;
+}
+
+.ng__device.is-dimmed,
+.ng__customer.is-dimmed {
+  opacity: 0.25;
+}
+
+.ng__device-box {
+  fill: var(--surface-2);
+  stroke: var(--border-strong);
+  stroke-width: 1.5;
+  transition: stroke 200ms ease;
+}
+
+.ng__device.is-shared .ng__device-box {
+  stroke: var(--error);
+  stroke-width: 2;
+}
+
+.ng__device-glow {
+  fill: color-mix(in srgb, var(--error) 14%, transparent);
+  stroke: none;
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--error) 40%, transparent));
+}
+
+.ng__device-glyph {
+  fill: none;
+  stroke: var(--text-2);
+  stroke-width: 1.5;
+}
+
+.ng__device.is-shared .ng__device-glyph {
+  stroke: var(--error-on-soft);
+}
+
+.ng__customer {
+  cursor: pointer;
+  outline: none;
+}
+
+.ng__customer-dot {
+  stroke-width: 2;
+  transition: stroke-width 200ms ease;
+}
+
+.ng__customer:hover .ng__customer-dot,
+.ng__customer.is-active .ng__customer-dot {
+  stroke-width: 3;
+}
+
+.ng__customer:focus-visible .ng__customer-dot {
+  stroke-width: 3;
+  outline: none;
+}
+
+.ng__customer:focus-visible .ng__label {
+  fill: var(--brand);
+}
+
+.ng__ring {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2.5;
+}
+
+.ng__customer:focus-visible .ng__ring,
+.ng__customer:focus-visible::after {
+  stroke-width: 3;
+}
+
+.ng__label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  fill: var(--text-2);
+  pointer-events: none;
+}
+
+.ng__label--device {
+  fill: var(--text-3);
+}
+
+.ng__device.is-shared .ng__label--device {
+  fill: var(--error-on-soft);
+}
+
+.ng--compact .ng__label {
+  font-size: 10px;
+}
+
+.ng__focus {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2;
+  stroke-dasharray: 3 3;
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.ng__customer:focus-visible .ng__focus {
+  opacity: 1;
+}
